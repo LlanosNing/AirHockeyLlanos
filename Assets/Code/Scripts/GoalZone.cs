@@ -8,7 +8,10 @@ public class GoalZone : MonoBehaviour
     //Referencia para acceder al marcador de puntos
     public TextMeshProUGUI scoreText;
     //Variable para guardar los puntos marcados en esa portería
-    int score;
+    public int score;
+
+    //Referencia al GameManager
+    public GameManager gMReference;
 
     //Antes de que empiece el juego
     private void Awake()
@@ -32,8 +35,22 @@ public class GoalZone : MonoBehaviour
         {
             //Sumo 1 a la puntuación
             score++;
-            //Cambiamos el texto de la puntuación al valor que tenga en ese momento el score
-            scoreText.text = score.ToString();
+            //Si la puntuación es mayor de 9
+            if (score > 9)
+            {
+                //Ejecuto el método que hace que se pase a otra ronda
+                gMReference.GoalScored();
+                //Ejecuto el método que termina esta partida
+                gMReference.WinGame();
+            }
+            //Si no
+            else
+            {
+                //Cambiamos el texto de la puntuación al valor que tenga en ese momento el score
+                scoreText.text = score.ToString();
+                //Ejecuto el método que hace que se pase a otra ronda
+                gMReference.GoalScored();
+            }
         }
     }
 }
