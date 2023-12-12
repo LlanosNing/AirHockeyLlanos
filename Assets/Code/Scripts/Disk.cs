@@ -36,7 +36,7 @@ public class Disk : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) //El parámetro collision es el objeto que ha chocado contra el disco
     {
         //Si el disco colisiona con la pala izquierda
-        if(collision.gameObject.name == "RacketLeft")
+        if(collision.gameObject.name == "PlayerLeft")
         {
             //Obtenemos el factor de golpeo, pasándole la posición del disco, la posición de la pala, y lo que mide de alto el collider de la pala (es decir, lo que mide la pala)
             float yF = HitFactor(transform.position, collision.transform.position, collision.collider.bounds.size.y);
@@ -46,6 +46,15 @@ public class Disk : MonoBehaviour
              * Normalizado todo el vector a 1, para que la bola no acelere */
             Vector2 direction = new Vector2(1, yF).normalized; //Hacemos que no acelere en su movimiento en diagonal
             //Le decimos al disco que salga con esa velocidad previamente calculada
+            rb.velocity = direction * diskSpeed;
+        }
+
+        if (collision.gameObject.name == "PlayerRight")
+        {
+            float yF = HitFactor(transform.position, collision.transform.position, -collision.collider.bounds.size.y);
+
+            Vector2 direction = new Vector2(1, -yF).normalized;
+
             rb.velocity = direction * diskSpeed;
         }
     }
