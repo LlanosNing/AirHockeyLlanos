@@ -6,7 +6,7 @@ using TMPro; //Librería para poder acceder a los TextMeshPro
 public class GoalZone : MonoBehaviour
 {
     //Referencia para acceder al marcador de puntos
-    public TextMeshProUGUI scoreText;
+    //public TextMeshProUGUI scoreText;
     //Variable para guardar los puntos marcados en esa portería
     public int score;
 
@@ -19,7 +19,7 @@ public class GoalZone : MonoBehaviour
         //Ponemos la puntuación en 0
         score = 0;
         //Cambiamos el texto de la puntuación al valor que tenga en ese momento el score
-        scoreText.text = score.ToString();
+        //scoreText.text = score.ToString();
 
         //Para transformar un int en un string hay 3 maneras
         //scoreText.text = score + ""; le sumo un string vacío a ese int, luego ya será todo un string
@@ -33,24 +33,7 @@ public class GoalZone : MonoBehaviour
         //Solo aquellos GameObjects etiquetados como Disco, que hayan entrado en el trigger
         if (collision.CompareTag("Disco"))
         {
-            //Sumo 1 a la puntuación
-            score++;
-            //Si la puntuación es mayor de 9
-            if (score > 9)
-            {
-                //Ejecuto el método que hace que se pase a otra ronda
-                gMReference.GoalScored();
-                //Ejecuto el método que termina esta partida
-                gMReference.WinGame();
-            }
-            //Si no
-            else
-            {
-                //Cambiamos el texto de la puntuación al valor que tenga en ese momento el score
-                scoreText.text = score.ToString();
-                //Ejecuto el método que hace que se pase a otra ronda
-                gMReference.GoalScored();
-            }
+            gMReference.GoalScored();
         }
     }
 }

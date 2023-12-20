@@ -11,14 +11,14 @@ public class GameManager : MonoBehaviour
     //Referencia al disco
     public GameObject disk;
     //Referencia para las palas
-    public GameObject playerLeft, playerRight;
+    public GameObject playerLeft, playerRight, playerUp, playerDown;
     //Referencia para el texto del ganador
-    public GameObject panelWin;
+    //public GameObject panelWin;
 
     //Referencias a las porterias
-    public GameObject goalLeft, goalRight;
+    public GameObject goalLeft, goalRight, goalUp, goalDown;
     //Referencia para acceder al cartel de ganar
-    public TextMeshProUGUI winText;
+    //public TextMeshProUGUI winText;
 
     //Método para hacer lo que ocurre al marcar un punto
     public void GoalScored()
@@ -28,9 +28,15 @@ public class GameManager : MonoBehaviour
         //Ponemos a los jugadores en sus posiciones de origen
         playerLeft.transform.position = new Vector2(-6.75f, 0f);
         playerRight.transform.position = new Vector2(6.75f, 0f);
+        playerUp.transform.position = new Vector2(0f, 5.61f);
+        playerDown.transform.position = new Vector2(0f, -5.61f);
+
+
 
         //Aquí guardamos la velocidad en X que llevaba el disco e invertimos su signo
         direction = new Vector2(-disk.GetComponent<Rigidbody2D>().velocity.x, 0f);
+        direction = new Vector2(0f,-disk.GetComponent<Rigidbody2D>().velocity.y);
+
 
         //Paramos el disco
         disk.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -47,7 +53,7 @@ public class GameManager : MonoBehaviour
     }
 
     //Método para resetear el juego cuando uno gana
-    public void WinGame()
+   /* public void WinGame()
     {
         //SetActive sirve para activar o desactivar objetos
         panelWin.SetActive(true);
@@ -65,5 +71,5 @@ public class GameManager : MonoBehaviour
     {
         //Vamos a la escena de título
         SceneManager.LoadScene("MainMenu");
-    }
+    }*/
 }

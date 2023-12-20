@@ -14,7 +14,7 @@ public class Disk : MonoBehaviour
     void Start()
     {
         //El disco empieza con una velocidad que lo impulsa a la derecha
-        rb.velocity = Vector2.right * diskSpeed; //Equivale a new Vector2(1, 0)
+        rb.velocity = Vector2.up * diskSpeed; //Equivale a new Vector2(1, 0)
     }
 
     // Update is called once per frame
@@ -61,6 +61,32 @@ public class Disk : MonoBehaviour
             //Le decimos al disco que salga con esa velocidad previamente calculada
             rb.velocity = direction * diskSpeed;
         }
+
+        if (collision.gameObject.name == "PlayerUp")
+        {
+            //Obtenemos el factor de golpeo, pasándole la posición del disco, la posición de la pala, y lo que mide de alto el collider de la pala (es decir, lo que mide la pala)
+            float yF = HitFactor2(transform.position, collision.transform.position, collision.collider.bounds.size.x);
+            /*Le damos una nueva dirección al disco
+             * En este caso con una X a la derecha
+             * Y nuestro factor de golpeo calculado
+             * Normalizado todo el vector a 1, para que la bola no acelere */
+            Vector2 direction = new Vector2(yF, -1).normalized; //Hacemos que no acelere en su movimiento en diagonal
+            //Le decimos al disco que salga con esa velocidad previamente calculada
+            rb.velocity = direction * diskSpeed;
+        }
+
+        if (collision.gameObject.name == "PlayerDown")
+        {
+            //Obtenemos el factor de golpeo, pasándole la posición del disco, la posición de la pala, y lo que mide de alto el collider de la pala (es decir, lo que mide la pala)
+            float yF = HitFactor2(transform.position, collision.transform.position, collision.collider.bounds.size.x);
+            /*Le damos una nueva dirección al disco
+             * En este caso con una X a la derecha
+             * Y nuestro factor de golpeo calculado
+             * Normalizado todo el vector a 1, para que la bola no acelere */
+            Vector2 direction = new Vector2(yF, 1).normalized; //Hacemos que no acelere en su movimiento en diagonal
+            //Le decimos al disco que salga con esa velocidad previamente calculada
+            rb.velocity = direction * diskSpeed;
+        }
     }
 
     /*
@@ -78,5 +104,10 @@ public class Disk : MonoBehaviour
     private float HitFactor(Vector2 diskPosition, Vector2 racketPosition, float racketHeight)
     {
         return (diskPosition.y - racketPosition.y) / racketHeight;
+    }
+
+    private float HitFactor2(Vector2 diskPosition, Vector2 racketPosition, float racketHeight)
+    {
+        return (diskPosition.x - racketPosition.x) / racketHeight;
     }
 }
